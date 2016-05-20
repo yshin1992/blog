@@ -12,4 +12,5 @@ public interface SysConstants {
 	
 	static String DEFAULT_CHARSET = "UTF-8";
 	
+	static String CURRENT_USER = "cur_user";
 }

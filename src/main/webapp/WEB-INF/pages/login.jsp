@@ -15,6 +15,7 @@
 		background: #6CD7F3;
 		width:100%;
 		line-height:36px;
+		padding:0 10px;
 	}
 	label{
 		width: 85px;
@@ -26,13 +27,21 @@
 <body>
 	<div class="nav-heading">
 		<span>Gimis博客</span>
+		<span id="login-div">
+		<c:choose>
+			<c:when test="${not empty sessionScope.cur_user }">
+				<a href="<c:url value='perinfo.do'/>">${sessionScope.cur_user.username }</a>
+			</c:when>
+		</c:choose>
+		</span>
 	</div>
+	<div class="login-form">
 	<form action="<c:url value='/login.do'/>" method="post" onsubmit="checkForm();">
 		<label>用户名</label><input type="text" name="username" /><br/>
 		<label>密码</label><input type="password" name="passwd" /><br/>
 		<input type="submit" value="登录" />
 	</form>
-	
+	</div>
 </body>
 <script type="text/javascript">
 	function checkForm(){
