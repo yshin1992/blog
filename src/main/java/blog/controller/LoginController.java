@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import blog.constants.SysConstants;
 import blog.constants.URLConstants;
+import blog.dao.UserDao;
+import blog.dao.impl.UserDaoImpl;
+import blog.domain.User;
 
 /**
  * 用户登录
@@ -30,10 +33,21 @@ public class LoginController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-		req.setAttribute(SysConstants.OPERATE_RESULT, SysConstants.OPERATE_SUCCESS);
-		req.setAttribute(SysConstants.URL_RETURN , URLConstants.LOGIN );
-		req.getRequestDispatcher(URLConstants.PAGE_RESULT).forward(req, resp);
+		String userName = req.getParameter("username");
+		String passwd = req.getParameter("passwd");
+		if(null != userName && null != passwd)
+		{
+			UserDao dao = new UserDaoImpl();
+			User user = dao.queryUser(userName, passwd);
+			if(null != user)
+			{
+				req.getSession().setAttribute(SysConstants.CURRENT_USER, user);
+				req.getRequestDispatcher(URLConstants.PAGE_INDEX).forward(req, resp);
+				return ;
+			}
+		}
+		req.setAttribute(SysConstants.ERROR_INFO, "用户名或密码错误!");
+		req.getRequestDispatcher(URLConstants.PAGE_LOGIN).forward(req, resp);
 	}
 
 	

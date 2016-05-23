@@ -10,4 +10,9 @@ public interface URLConstants {
 	
 	static String PAGE_RESULT = PAGE_PREFIX + "common/result.jsp";
 	
+	static String INDEX = "/index.do";
+	
+	static String PAGE_INDEX = PAGE_PREFIX + "index.jsp";
+	
+	static String LOGINOUT = "/loginout.do";
 }
