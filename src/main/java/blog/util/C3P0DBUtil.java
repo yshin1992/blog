@@ -108,6 +108,10 @@ public class C3P0DBUtil {
 		return conn;
 	}
 
+	/**
+	 * 关闭结果集
+	 * @param ResultSet
+	 */
 	public static void attemptClose(ResultSet o) {
 		try {
 			if (o != null)
@@ -117,6 +121,10 @@ public class C3P0DBUtil {
 		}
 	}
 
+	/**
+	 * 关闭Statement
+	 * @param Statement
+	 */
 	public static void attemptClose(Statement o) {
 		try {
 			if (o != null)
@@ -126,6 +134,10 @@ public class C3P0DBUtil {
 		}
 	}
 
+	/**
+	 * 关闭数据库连接
+	 * @param Connection
+	 */
 	public static void attemptClose(Connection o) {
 		try {
 			if (o != null)
@@ -133,5 +145,12 @@ public class C3P0DBUtil {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void attemptCloseAll(ResultSet rs,Statement stmt,Connection con)
+	{
+		attemptClose(rs);
+		attemptClose(stmt);
+		attemptClose(con);
 	}
 }

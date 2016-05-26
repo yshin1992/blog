@@ -25,7 +25,7 @@
 </head>
 <body>
 	<div class="login-form">
-	<form action="<c:url value='/login.do'/>" method="post" onsubmit="checkForm();">
+	<form action="<c:url value='/login.do'/>" method="post" onsubmit="return checkForm();">
 		<label>用户名</label><input type="text" name="username" /><br/>
 		<label>密码</label><input type="password" name="passwd" /><br/>
 		<input type="submit" value="登录" />
@@ -35,6 +35,19 @@
 </body>
 <script type="text/javascript">
 	function checkForm(){
+		var username = document.forms[0].username.value;
+		var passwd = document.forms[0].passwd.value;
+		console.log(username + "," + passwd);
+		if(!username){
+			alert("用户名不能为空!");
+			document.forms[0].username.focus();
+			return false;
+		}
+		if(!passwd){
+			alert("密码不能为空!")
+			document.forms[0].passwd.focus();
+			return false;
+		}
 		return true;
 	}
 </script>

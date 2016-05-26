@@ -49,9 +49,7 @@ public class UserDaoImpl extends DaoAdapter<User> implements UserDao {
 		} catch (SQLException e) {
 			logger.error("查询用户信息失败 !", e);
 		} finally {
-			C3P0DBUtil.attemptClose(rs);
-			C3P0DBUtil.attemptClose(pstm);
-			C3P0DBUtil.attemptClose(con);
+			C3P0DBUtil.attemptCloseAll(rs, pstm, con);
 		}
 		return user;
 	}

@@ -7,7 +7,7 @@
 <head>
 <link rel="shortcut icon" href="<c:url value='/icons/blog.png' />" type="image/x-icon" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title>Blog</title>
 <style type="text/css">
 	html,body{
 		padding:0;
