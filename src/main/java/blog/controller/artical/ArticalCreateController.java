@@ -1,4 +1,4 @@
-package blog.controller;
+package blog.controller.artical;
 
 import java.io.IOException;
 

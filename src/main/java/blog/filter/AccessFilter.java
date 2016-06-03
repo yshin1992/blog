@@ -41,7 +41,7 @@ public class AccessFilter implements Filter {
 			return ;
 		}
 		if(null == req.getSession().getAttribute(SysConstants.CURRENT_USER) 
-				&& !req.getRequestURI().endsWith(URLConstants.LOGIN))
+				&& req.getRequestURI().indexOf(URLConstants.LOGIN) == -1)
 		{
 			//防止未登录的用户访问
 			req.getRequestDispatcher(URLConstants.PAGE_LOGIN).forward(request, response);

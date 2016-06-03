@@ -1,4 +1,4 @@
-package blog.controller;
+package blog.controller.articaltype;
 
 import java.io.IOException;
 
@@ -27,7 +27,7 @@ public class ArticalTypeAddController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String typeName = req.getParameter("typeName");
 		String pidStr = req.getParameter("pid");
@@ -40,12 +40,13 @@ public class ArticalTypeAddController extends HttpServlet {
 				type.setParentId(pid);
 				type.setTypeName(typeName);
 				ArticalTypeDao dao = new ArticalTypeDaoImpl();
-				dao.create(type);
+				int id = dao.create(type);
+				//返回新增的主键id
+				resp.getWriter().println(id);
 			}catch(Exception e)
 			{
 				log.error("添加文章类型异常!",e);
 			}
 		}
 	}
-	
 }

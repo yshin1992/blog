@@ -22,8 +22,7 @@ id smallint auto_increment comment '文章类型自增ID',
 typeName nvarchar(50) not null comment '文章类型名称',
 parentId smallint not null comment '文章父类型ID',
 status bit default 1 comment '文章类型有效位标识',
-primary key(id),
-foreign key(parentId) references artical_type(id)
+primary key(id)
 ) default charset=utf8 engine=InnoDB;
 
 alter table artical_type comment '文章类型表';
@@ -41,3 +40,7 @@ foreign key(typeId) references artical_type(id)
 )default charset=utf8 engine=InnoDB;
 
 alter table artical comment '文章表';
+
+show create table artical_type;
+
+alter table artical_type drop foreign key artical_type_ibfk_1;

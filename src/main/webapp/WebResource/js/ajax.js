@@ -25,3 +25,4 @@ function getXMLHttpRequest()
 		return new ActiveXObject("Microsoft.XMLHTTP");
 	}
 }
+

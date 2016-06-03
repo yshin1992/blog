@@ -1,4 +1,4 @@
-package blog.controller;
+package blog.controller.articaltype;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,6 +33,7 @@ public class ArticalTypeGetController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String parentId = req.getParameter("id");
+		log.debug("接收到获取文章子类型的请求，父类型:"+parentId);
 		if(null != parentId)
 		{
 			try
