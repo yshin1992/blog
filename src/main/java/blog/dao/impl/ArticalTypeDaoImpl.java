@@ -17,38 +17,33 @@ public class ArticalTypeDaoImpl extends DaoAdapter<ArticalType> implements Artic
 
 	private static final Logger logger = Logger.getLogger(ArticalTypeDaoImpl.class);
 	
-	private static final String ARTICAL_TYPE_CREATE = "insert into artical_type(typeName,parentId) values(?,?);";
+	private static final String ARTICAL_TYPE_CREATE = "insert into artical_type(id,typeName,parentId) values(?,?,?);";
 	
-	private static final String ARTICAL_TYPE_QUERY_LIST = "select id,typeName,parentId from artical_type where parentId=? and status=1";
+	private static final String ARTICAL_TYPE_QUERY_LIST = "select id,typeName,parentId from artical_type where parentId=?";
 	
-	private static final String ARTICAL_TYPE_QUERY_BY_ID = "select id,typeName,parentId from artical_type where id=? and status=1";
+	private static final String ARTICAL_TYPE_QUERY_BY_ID = "select id,typeName,parentId from artical_type where id=?";
+	
+	private static final String ARTICAL_TYPE_DELETE = "delete from artical_type where id=?";
 	@Override
 	public int create(ArticalType t) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		int generateKey = 0;
+		int execRows = 0;
 		try{
 			con = C3P0DBUtil.getConnection();
-			stmt = con.prepareStatement(ARTICAL_TYPE_CREATE, PreparedStatement.RETURN_GENERATED_KEYS);
-			stmt.setString(1, t.getTypeName());
-			stmt.setShort(2, t.getParentId());
-			int execRows = stmt.executeUpdate();
-			if(execRows > 0)
-			{
-				rs = stmt.getGeneratedKeys();
-				if(rs.next())
-				{
-					generateKey = rs.getInt(1);
-				}
-			}
+			stmt = con.prepareStatement(ARTICAL_TYPE_CREATE);
+			stmt.setString(1, t.getId());
+			stmt.setString(2, t.getTypeName());
+			stmt.setString(3, t.getParentId());
+			execRows = stmt.executeUpdate();
 		}catch(SQLException e)
 		{
 			logger.error("创建文章类型失败",e);
 		}finally{
 			C3P0DBUtil.attemptCloseAll(rs, stmt, con);
 		}
-		return generateKey;
+		return execRows;
 	}
 
 	/**
@@ -70,8 +65,9 @@ public class ArticalTypeDaoImpl extends DaoAdapter<ArticalType> implements Artic
 			stmt = con.prepareStatement(ARTICAL_TYPE_CREATE);
 			for(ArticalType type : typeList)
 			{
-				stmt.setString(1, type.getTypeName());
-				stmt.setShort(2, type.getParentId());
+				stmt.setString(1, type.getId());
+				stmt.setString(2, type.getTypeName());
+				stmt.setString(3, type.getParentId());
 				stmt.addBatch();
 			}
 			stmt.executeBatch();
@@ -100,6 +96,29 @@ public class ArticalTypeDaoImpl extends DaoAdapter<ArticalType> implements Artic
 		return 0;
 	}
 
+	public int delete(String id){
+		int executeRows = 0;
+		if(null == id){
+			return executeRows;
+		}
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try
+		{
+			con = C3P0DBUtil.getConnection();
+			pstm = con.prepareStatement(ARTICAL_TYPE_DELETE);
+			pstm.setString(1, id);
+			executeRows = pstm.executeUpdate();
+		}catch(SQLException e)
+		{
+			logger.error("删除文章类型异常!"+id,e);
+		}finally{
+			C3P0DBUtil.attemptClose(pstm);
+			C3P0DBUtil.attemptClose(con);
+		}
+		return executeRows;
+	}
+	
 	/**
 	 * 遍历文章类型
 	 */
@@ -114,19 +133,19 @@ public class ArticalTypeDaoImpl extends DaoAdapter<ArticalType> implements Artic
 			pstm = con.prepareStatement(ARTICAL_TYPE_QUERY_LIST);
 			if(null == t)
 			{
-				pstm.setShort(1, (short) -1);
+				pstm.setString(1, "-1");
 			}else
 			{
-				pstm.setShort(1, t.getId());
+				pstm.setString(1, t.getId());
 			}
 			rs = pstm.executeQuery();
 			typeList = new ArrayList<ArticalType>();	
 			while(rs.next())
 			{
 				ArticalType type = new ArticalType();
-				type.setId(rs.getShort(1));
+				type.setId(rs.getString(1));
 				type.setTypeName(rs.getString(2));
-				type.setParentId(rs.getShort(3));
+				type.setParentId(rs.getString(3));
 				typeList.add(type);
 			}
 		}catch(SQLException e)
@@ -139,14 +158,12 @@ public class ArticalTypeDaoImpl extends DaoAdapter<ArticalType> implements Artic
 		return typeList;
 	}
 
-	@Override
-	public ArticalType queryByPk(Integer pk) {
+	public ArticalType queryByPk(String pk) {
 		// TODO Auto-generated method stub
 		if(null == pk)
 		{
 			return null;
 		}
-		short id = Short.valueOf(pk.toString());
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -154,14 +171,14 @@ public class ArticalTypeDaoImpl extends DaoAdapter<ArticalType> implements Artic
 		try{
 			con = C3P0DBUtil.getConnection();
 			pstm = con.prepareStatement(ARTICAL_TYPE_QUERY_BY_ID);
-			pstm.setShort(1, id);
+			pstm.setString(1, pk);
 			rs = pstm.executeQuery();
 			if(rs.next())
 			{
 				type = new ArticalType();
-				type.setId(rs.getShort(1));
+				type.setId(rs.getString(1));
 				type.setTypeName(rs.getString(2));
-				type.setParentId(rs.getShort(3));
+				type.setParentId(rs.getString(3));
 			}
 		}catch(SQLException e)
 		{

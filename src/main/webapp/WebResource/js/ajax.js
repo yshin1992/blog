@@ -26,3 +26,35 @@ function getXMLHttpRequest()
 	}
 }
 
+/**
+ * ajax工具类
+ * url 请求的URL
+ * method 请求的方法，默认为POST
+ * param 请求附带的参数，默认为null
+ * success 请求成功时的回调函数
+ * failure 请求失败时的回调函数
+ * send 发送请求
+ */
+var ajaxUtil = function(){
+	this.settings={
+		url:"",
+		method:"POST",
+		param:null
+	};
+	this.send=function(success,failure,exception){
+		var xhr = getXMLHttpRequest();
+		xhr.open(this.settings.method,this.settings.url);
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState == 4){
+				if(xhr.status == 200){
+					success(xhr);
+				}else{
+					failure && failure(xhr);
+				}
+			}
+		};
+		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;");
+		xhr.send(this.settings.param);
+	};
+	return this;
+}

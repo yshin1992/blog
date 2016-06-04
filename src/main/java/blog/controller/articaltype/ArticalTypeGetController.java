@@ -13,6 +13,7 @@ import net.sf.json.JSONArray;
 
 import org.apache.log4j.Logger;
 
+import blog.constants.URLConstants;
 import blog.dao.ArticalTypeDao;
 import blog.dao.impl.ArticalTypeDaoImpl;
 import blog.domain.ArticalType;
@@ -22,7 +23,7 @@ import blog.domain.ArticalType;
  * @author Administrator
  *
  */
-@WebServlet(urlPatterns={"/articalType/getChilds.do"})
+@WebServlet(urlPatterns={URLConstants.ARTICAL_GET_CHILDS})
 public class ArticalTypeGetController extends HttpServlet {
 
 	private static final Logger log = Logger.getLogger(ArticalTypeGetController.class);
@@ -40,7 +41,7 @@ public class ArticalTypeGetController extends HttpServlet {
 			{
 				ArticalTypeDao typeDao = new ArticalTypeDaoImpl();
 				ArticalType type = new ArticalType();
-				type.setId(Short.valueOf(parentId));
+				type.setId(parentId);
 				List<ArticalType> resList = typeDao.reverse(type);
 				JSONArray arr = JSONArray.fromObject(resList);
 				resp.getWriter().write(arr.toString());

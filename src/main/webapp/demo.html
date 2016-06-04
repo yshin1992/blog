@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+
+<p>该实例使用 addEventListener() 方法来向按钮添加点击事件。</p>
+
+<button id="myBtn">点我</button>
+
+<p id="demo"></p>
+<input type="button" onclick="goAjax()"/>
+<script>
+document.getElementById("myBtn").addEventListener("click", function(){
+    var btn = document.createElement("button");
+    btn.value="点击";
+    btn.addEventListener("click",function(){alert("hello")});
+    document.getElementById("demo").appendChild(btn);
+});
+</script>
+<script>
+var ajaxUtil = function(){
+		this.settings={
+			url:"",
+			method:"POST",
+			param:null
+		},
+		this.value=5;
+		this.success=function(xhr){alert("ok");},
+		this.failure=function(xhr){},
+		this.send=function(){
+			alert("hello"+this.settings.method);
+			this.success();
+		}
+		return this;
+	}
+function goAjax(){
+	var $ajaxUtil = new ajaxUtil();
+	$ajaxUtil.send($ajaxUtil);
+}
+
+</script>
+</body>
+</html>

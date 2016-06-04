@@ -1,6 +1,7 @@
 package blog.controller.articaltype;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import blog.constants.URLConstants;
 import blog.dao.ArticalTypeDao;
 import blog.dao.impl.ArticalTypeDaoImpl;
 import blog.domain.ArticalType;
@@ -19,7 +21,7 @@ import blog.domain.ArticalType;
  * @author Administrator
  *
  */
-@WebServlet(urlPatterns={"/articalType/add.do"})
+@WebServlet(urlPatterns={URLConstants.ARTICAL_ADD})
 public class ArticalTypeAddController extends HttpServlet {
 
 	private static final Logger log = Logger.getLogger(ArticalTypeAddController.class);
@@ -35,12 +37,13 @@ public class ArticalTypeAddController extends HttpServlet {
 		{
 			try
 			{
-				Short pid = Short.valueOf(pidStr);
 				ArticalType type = new ArticalType();
-				type.setParentId(pid);
+				String id = UUID.randomUUID().toString().toUpperCase();
+				type.setId(id);
+				type.setParentId(pidStr.trim());
 				type.setTypeName(typeName);
 				ArticalTypeDao dao = new ArticalTypeDaoImpl();
-				int id = dao.create(type);
+				dao.create(type);
 				//返回新增的主键id
 				resp.getWriter().println(id);
 			}catch(Exception e)

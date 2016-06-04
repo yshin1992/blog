@@ -18,6 +18,9 @@
 	fieldset{
 		margin:30px;
 	}
+	div.top-level{
+		margin-bottom:0.5em
+	}
 	div.top-level a{
 		text-decoration:none;
 		display: inline-block;
@@ -46,50 +49,56 @@
 		<div class="top-level" id="top-level">
 			<c:if test="${not empty resList }">
 				<c:forEach items="${resList }" var="type">
-					<a href="JavaScript:void(0);" onclick="showChildType(${type.id})" onmouseover="showDelBtn(this);" onmouseout="hideDelBtn(this);"><c:out value="${type.typeName }" />
-					</a><span onmouseover="show(this);" onmouseout="hide(this);"><a href="JavaScript:void(0);"  onclick="deleteType(${type.id})">×</a></span>
+					<a href="JavaScript:void(0);" onclick="showChildType('${type.id}')" onmouseover="showDelBtn(this);" onmouseout="hideDelBtn(this);">
+						<c:out value="${type.typeName }" />
+					</a>
+					<span onmouseover="show(this);" onmouseout="hide(this);">
+						<a href="JavaScript:void(0);"  onclick="deleteType('${type.id}',this)">×</a>
+					</span>
 				</c:forEach>
 			</c:if>
 		</div>
 		<input type="text" value="" id="typeAppend" style="display:none" />
-		<input type="button" id="addBtn" value="新增" onclick="addInit()"/>
-		<input type="button" id="saveBtn" value="保存" onclick="add()" style="display:none" />
+		<input type="button" id="addBtn" value="新增" onclick="addInit(1)"/>
+		<input type="button" id="saveBtn" value="保存" onclick="add(1)" style="display:none" />
 	</fieldset>
 	<fieldset id="second">
 		<legend>文章子类型</legend>
 		<div class="top-level" id="second-level">
-		
 		</div>
+		<input type="text" value="" id="typeAppend-second" style="display:none" />
+		<input type="button" id="addBtn-second" value="新增" onclick="addInit(2)"/>
+		<input type="button" id="saveBtn-second" value="保存" onclick="add(2)" style="display:none" />
+		<input type="hidden" id="parentType" value="${resList[0].id }"/>
 	</fieldset>
 </body>
 <script type="text/javascript" src="<c:url value='/WebResource/js/ajax.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/WebResource/js/articaltype.js'/>"></script>
 <script type="text/javascript">
 /**
  * 显示该文章类型的子类型
  */
 function showChildType(typeId)
 {
-	var xhr = getXMLHttpRequest();
-	var url = "<c:url value='/articalType/getChilds.do'/>?id="+typeId;
-	xhr.open("GET",url);
-	xhr.onreadystatechange=function(){
-		if(xhr.readyState == 4){
-			if(xhr.status == 200){
-				var text = xhr.responseText;
-				console.log(text);
-			}
-		}
+	var $ajax = new ajaxUtil();
+	$ajax.settings={
+			url:"<c:url value='/articalType/getChilds.do'/>?id="+typeId,
+			method:"GET",
+			param:null
 	}
-	xhr.send(null);
+	$ajax.send(function(xhr){
+		var childs = xhr.reponseText;
+		
+	}); 
+	document.getElementById("parentType").value=typeId;
 }
 /**
  * 添加文章类型
  */
-function addInit()
+function addInit(level)
 {
-	document.getElementById("typeAppend").style.display="inline-block";
-	document.getElementById("saveBtn").style.display="inline-block";
-	document.getElementById("addBtn").style.display="none";
+	articalEdit.level = level;
+	articalEdit.initAdd();
 }
 
 /**
@@ -110,59 +119,62 @@ function appendTypeDOM(typeName,id,pid)
 	if(pid == -1){
 		document.getElementById("top-level").appendChild(aNode);
 		document.getElementById("top-level").appendChild(spanNode);
+		//一级文章类型有子类型，所以添加此事件
+		aNode.addEventListener("click",function(){showChildType(id);},false);
 	}else{
-		//TODO
+		document.getElementById("second-level").appendChild(aNode);
+		document.getElementById("second-level").appendChild(spanNode);
 	}
 	
 	//绑定事件
-	aNode.addEventListener("click",function(){showChildType(id);},false);
 	aNode.addEventListener("mouseover",function(){showDelBtn(aNode);},false);
 	aNode.addEventListener("mouseout",function(){hideDelBtn(aNode);},false);
+	aNode.setAttribute("href","JavaScript:void(0);");
 	
 	spanNode.addEventListener("mouseover",function(){show(spanNode);},false);
 	spanNode.addEventListener("mouseout",function(){hide(spanNode);},false);
 	
-	aChildNode.addEventListener("click",function(){deleteType(id);},false);
+	aChildNode.addEventListener("click",function(){deleteType(id,aChildNode);},false);
+	aChildNode.setAttribute("href","JavaScript:void(0);");
 }
 
 /**
  * 使用Ajax方法将数据添加到数据库中
  */
 function ajaxAdd(typeName,pid){
-	var xhr = getXMLHttpRequest();
-	var url = "<c:url value='/articalType/add.do'/>";
-	xhr.open("POST",url);
-	xhr.onreadystatechange=function(){
-		if(xhr.readyState == 4){
-			if(xhr.status == 200){
-				var id = xhr.responseText;
-				console.log(id);
-				appendTypeDOM(typeName,id,pid);
-			}
-			else{
-				alert("添加失败!");
-			}
-		}
+	var $ajax = new ajaxUtil();
+	$ajax.settings={
+			url:"<c:url value='/articalType/add.do'/>",
+			method:"POST",
+			param:"typeName="+typeName+"&pid="+pid
 	}
-	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;");
-	xhr.send("typeName="+typeName+"&pid="+pid);
+	$ajax.send(function(xhr){appendTypeDOM(typeName,xhr.responseText,pid);}); 
 }
 
 /**
  * 添加文章类型
  */
-function add()
+function add(level)
 {
-	var append = document.getElementById("typeAppend").value;
+	var append;
+	if(level == 1){
+		append = document.getElementById("typeAppend").value;
+	}
+	else{
+		append = document.getElementById("typeAppend-second").value;
+	}
 	if(append){
-		ajaxAdd(append,-1);
+		if(level == 1){
+			ajaxAdd(append,-1);
+		}else if(level == 2){
+			var pid = document.getElementById("parentType").value;
+			ajaxAdd(append,pid);
+		}
 	}else{
 		return ;
 	}
-	document.getElementById("typeAppend").value="";
-	document.getElementById("typeAppend").style.display="none";
-	document.getElementById("saveBtn").style.display="none";
-	document.getElementById("addBtn").style.display="inline-block";
+	articalEdit.level = level;
+	articalEdit.add();
 }
 
 function show(dom){
@@ -193,12 +205,29 @@ function hideDelBtn(dom)
 /**
  * 删除文章类型
  */
- function deleteType(id)
- {
-	var del = window.confirm("确认删除该文章类型么?");
-	if(del){
-		alert("删除文章类型!");
-	}
- }
+function deleteType(id,dom)
+{
+	 var cfm = window.confirm("确认删除此文章类型？");
+	 if(cfm){
+		 var $ajax = new ajaxUtil();
+		 $ajax.settings={
+					url:"<c:url value='/articalType/delete.do'/>",
+					method:"POST",
+					param:"id="+id
+		 }
+		 $ajax.send(function(xhr){
+				var result = xhr.responseText;
+				if(result == 1){
+					alert("删除成功！");
+					var predom = dom.parentNode.previousSibling;
+					var top = document.getElementById("top-level");
+					top.removeChild(predom);
+					top.removeChild(dom.parentNode);
+				}else if(result == -1){
+					alert("该文章类型有子文章类型，不能删除!");
+				}
+		 });  
+	 }
+}
 </script>
 </html>

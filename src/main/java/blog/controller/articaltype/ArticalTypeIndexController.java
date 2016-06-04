@@ -36,7 +36,7 @@ public class ArticalTypeIndexController extends HttpServlet {
 		if(null != queryId)
 		{
 			type = new ArticalType();
-			type.setId(Short.valueOf(queryId));
+			type.setId(queryId);
 		}
 		
 		ArticalTypeDao typeDao = new ArticalTypeDaoImpl();

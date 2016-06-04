@@ -31,5 +31,10 @@ public interface URLConstants {
 	
 	static String PAGE_ARTICAL_INDEX = PAGE_PREFIX + ARTICAL_PREFIX + "/type.jsp";
 	
+	static String ARTICAL_DELETE = ARTICAL_TYPE_PREFIX + "/delete.do";
+	
+	static String ARTICAL_ADD = ARTICAL_TYPE_PREFIX + "/add.do";
+	
+	static String ARTICAL_GET_CHILDS = ARTICAL_TYPE_PREFIX + "/getChilds.do";
 	
 }

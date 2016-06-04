@@ -10,7 +10,7 @@ public class ArticalType implements Entity {
 	/**
 	 * 文章类型ID
 	 */
-	private Short id;
+	private String id;
 	
 	/**
 	 * 类型名称
@@ -20,20 +20,12 @@ public class ArticalType implements Entity {
 	/**
 	 * 父类型ID
 	 */
-	private Short parentId;
+	private String parentId;
 	
 	/**
 	 * 有效标记
 	 */
 	private Boolean status;
-
-	public Short getId() {
-		return id;
-	}
-
-	public void setId(Short id) {
-		this.id = id;
-	}
 
 	public String getTypeName() {
 		return typeName;
@@ -43,20 +35,28 @@ public class ArticalType implements Entity {
 		this.typeName = typeName;
 	}
 
-	public Short getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Short parentId) {
-		this.parentId = parentId;
-	}
-
 	public Boolean getStatus() {
 		return status;
 	}
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 
 	@Override
