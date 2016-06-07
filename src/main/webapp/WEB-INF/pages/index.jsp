@@ -9,7 +9,7 @@
 <body>
 	<div>
 		<h3>博客列表</h3>
-		<a href="<c:url value='/blog/create.do'/>">创建博客</a>
+		<a href="<c:url value='/artical/create.do'/>">创建博客</a>
 	</div>
 </body>
 </html>

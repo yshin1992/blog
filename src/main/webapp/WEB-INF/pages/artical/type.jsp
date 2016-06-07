@@ -51,10 +51,7 @@
 				<c:forEach items="${resList }" var="type">
 					<a href="JavaScript:void(0);" onclick="showChildType('${type.id}')" onmouseover="showDelBtn(this);" onmouseout="hideDelBtn(this);">
 						<c:out value="${type.typeName }" />
-					</a>
-					<span onmouseover="show(this);" onmouseout="hide(this);">
-						<a href="JavaScript:void(0);"  onclick="deleteType('${type.id}',this)">×</a>
-					</span>
+					</a><span onmouseover="show(this);" onmouseout="hide(this);"><a href="JavaScript:void(0);"  onclick="deleteType('${type.id}',this,'${type.parentId }')">×</a></span>
 				</c:forEach>
 			</c:if>
 		</div>
@@ -73,13 +70,20 @@
 	</fieldset>
 </body>
 <script type="text/javascript" src="<c:url value='/WebResource/js/ajax.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/WebResource/js/common.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/WebResource/js/articaltype.js'/>"></script>
 <script type="text/javascript">
+window.onload=function(){
+	//加载第一个文章类型的子类型
+	showChildType('${resList[0].id }')
+}
 /**
  * 显示该文章类型的子类型
  */
 function showChildType(typeId)
 {
+	//清除之前的DOM元素
+	document.getElementById("second-level").innerHTML="";
 	var $ajax = new ajaxUtil();
 	$ajax.settings={
 			url:"<c:url value='/articalType/getChilds.do'/>?id="+typeId,
@@ -87,8 +91,12 @@ function showChildType(typeId)
 			param:null
 	}
 	$ajax.send(function(xhr){
-		var childs = xhr.reponseText;
-		
+		var childs = xhr.responseText;
+		childs = eval(childs);
+		console.log(childs)
+		for(var i=0;i<childs.length;i++){
+			appendTypeDOM(childs[i].typeName,childs[i].id,childs[i].parentId);
+		}
 	}); 
 	document.getElementById("parentType").value=typeId;
 }
@@ -134,7 +142,7 @@ function appendTypeDOM(typeName,id,pid)
 	spanNode.addEventListener("mouseover",function(){show(spanNode);},false);
 	spanNode.addEventListener("mouseout",function(){hide(spanNode);},false);
 	
-	aChildNode.addEventListener("click",function(){deleteType(id,aChildNode);},false);
+	aChildNode.addEventListener("click",function(){deleteType(id,aChildNode,pid);},false);
 	aChildNode.setAttribute("href","JavaScript:void(0);");
 }
 
@@ -177,13 +185,6 @@ function add(level)
 	articalEdit.add();
 }
 
-function show(dom){
-	dom.style.visibility="visible";
-}
-function hide(dom){
-	dom.style.visibility="hidden";
-}
-
 /**
  * 显示当前DOM元素的删除按钮
  */
@@ -205,7 +206,7 @@ function hideDelBtn(dom)
 /**
  * 删除文章类型
  */
-function deleteType(id,dom)
+function deleteType(id,dom,parentId)
 {
 	 var cfm = window.confirm("确认删除此文章类型？");
 	 if(cfm){
@@ -221,6 +222,9 @@ function deleteType(id,dom)
 					alert("删除成功！");
 					var predom = dom.parentNode.previousSibling;
 					var top = document.getElementById("top-level");
+					if(parentId != -1){
+						top = document.getElementById("second-level");
+					}
 					top.removeChild(predom);
 					top.removeChild(dom.parentNode);
 				}else if(result == -1){

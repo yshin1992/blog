@@ -10,23 +10,24 @@ var articalEdit={
 		},
 		initAdd:function(){
 			if(this.level == 2){
-				this.domIDs.typeAppend += "-second";
-				this.domIDs.saveBtn += "-second";
-				this.domIDs.addBtn += "-second";
+				this.domIDs.typeAppend = "typeAppend-second";
+				this.domIDs.saveBtn = "saveBtn-second";
+				this.domIDs.addBtn = "addBtn-second";
 			}else{
 				this.domIDs.typeAppend = "typeAppend";
 				this.domIDs.saveBtn = "saveBtn";
 				this.domIDs.addBtn = "addBtn";
 			}
 			document.getElementById(this.domIDs.typeAppend).style.display="inline-block";
+			document.getElementById(this.domIDs.typeAppend).focus();
 			document.getElementById(this.domIDs.saveBtn).style.display="inline-block";
 			document.getElementById(this.domIDs.addBtn).style.display="none";
 		},
 		add:function(){
 			if(this.level == 2){
-				this.domIDs.typeAppend += "-second";
-				this.domIDs.saveBtn += "-second";
-				this.domIDs.addBtn += "-second";
+				this.domIDs.typeAppend = "typeAppend-second";
+				this.domIDs.saveBtn = "saveBtn-second";
+				this.domIDs.addBtn = "addBtn-second";
 			}else{
 				this.domIDs.typeAppend = "typeAppend";
 				this.domIDs.saveBtn = "saveBtn";

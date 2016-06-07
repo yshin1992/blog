@@ -37,6 +37,8 @@ public class CharacterEncodingFilter implements Filter {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding(charset);
 		chain.doFilter(req, resp);
+//		resp.setContentType("text/html;charset=UTF-8");
+		resp.setCharacterEncoding(charset);
 	}
 
 	@Override

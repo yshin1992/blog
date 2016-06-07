@@ -22,25 +22,12 @@ public class ArticalType implements Entity {
 	 */
 	private String parentId;
 	
-	/**
-	 * 有效标记
-	 */
-	private Boolean status;
-
 	public String getTypeName() {
 		return typeName;
 	}
 
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
-	}
-
-	public Boolean getStatus() {
-		return status;
-	}
-
-	public void setStatus(Boolean status) {
-		this.status = status;
 	}
 
 	public String getId() {
@@ -62,7 +49,7 @@ public class ArticalType implements Entity {
 	@Override
 	public String toString() {
 		return "ArticalType [id=" + id + ", typeName=" + typeName
-				+ ", parentId=" + parentId + ", status=" + status + "]";
+				+ ", parentId=" + parentId + "]";
 	}
 	
 }

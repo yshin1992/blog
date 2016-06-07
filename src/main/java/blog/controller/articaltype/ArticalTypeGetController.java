@@ -44,7 +44,8 @@ public class ArticalTypeGetController extends HttpServlet {
 				type.setId(parentId);
 				List<ArticalType> resList = typeDao.reverse(type);
 				JSONArray arr = JSONArray.fromObject(resList);
-				resp.getWriter().write(arr.toString());
+				resp.setCharacterEncoding("utf-8");
+				resp.getWriter().println(arr.toString());
 			}catch(Exception e)
 			{
 				log.error("查询文章子类型异常!",e);

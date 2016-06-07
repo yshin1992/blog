@@ -15,4 +15,8 @@ public interface SysConstants {
 	static String CURRENT_USER = "cur_user";
 	
 	static String ERROR_INFO = "error_info";
+	
+	static String CONTENT_TYPE = "text/html;charset=UTF-8";
+	
+	static String PATH_ATTACHMENT = "/attached";
 }
