@@ -18,5 +18,5 @@ public interface SysConstants {
 	
 	static String CONTENT_TYPE = "text/html;charset=UTF-8";
 	
-	static String PATH_ATTACHMENT = "/attached";
+	static String PATH_ATTACHMENT = "/attached/";
 }

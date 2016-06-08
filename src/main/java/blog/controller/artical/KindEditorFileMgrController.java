@@ -36,7 +36,7 @@ public class KindEditorFileMgrController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		PrintWriter out = resp.getWriter();
 		//根目录路径，可以指定绝对路径，比如 /var/www/attached/
