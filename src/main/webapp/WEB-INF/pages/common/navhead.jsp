@@ -12,12 +12,14 @@
 	html,body{
 		padding:0;
 		margin:0 auto;
+		width:100%;
 	}
 	.nav-heading{
-		background: #6CD7F3;
-		width:100%;
+		background: #ccc;
 		line-height:36px;
-		padding:0 10px;
+	}
+	div.nav-heading-content{
+		margin:0 5%;
 	}
 	.logo{
 		color:gray;
@@ -37,15 +39,15 @@
 		position:relative;
 	}
 	div.user-setting {
-	position: absolute;
-	top: 28px;
-	background-color: #6CD7F3;
-	left: -10px;
-	padding: 5px 5px;
-	width: 50px;
-	display: none;
-	text-align: center;
-}
+		position: absolute;
+		top: 28px;
+		background-color: #ccc;
+		left: -10px;
+		padding: 5px 5px;
+		width: 50px;
+		display: none;
+		text-align: center;
+	}
 
 	div.user-setting>a {
 		text-decoration: none;
@@ -53,11 +55,37 @@
 		color: gray;
 		margin-top: 5px;
 		margin-bottom: 5px;
+		border-bottom:none;
+	}
+	div.user-setting>a:hover {
+		border-bottom:1px solid red;
+	}
+	div.nav{
+		border-bottom: 1px solid #e0e0e0;
+		background: #fefefe;
+		line-height:2em;
+		height:3em;
+		width:100%;
+	}
+	div.nav-content{
+		margin:0 5%;
+	}
+	nav-block a{
+		display:inline-block;
+		padding:0.5em;
+		color:#0f0f0f;
+		text-decoration: none;
+		border-bottom:none;
+	}
+	nav-block a:hover{
+		color:gray;
+		border-bottom:2px solid red;
 	}
 </style>
 </head>
 <body>
 	<div class="nav-heading">
+		<div class="nav-heading-content">
 		<span class="logo">Gimis博客</span>
 		<div class="login-div">
 		<c:choose>
@@ -74,7 +102,17 @@
 			</c:otherwise>
 		</c:choose>
 		</div>
+		</div>
 	</div>
+	<c:if test="${not empty sessionScope.cur_user }">
+		<div class="nav">
+			<div class="nav-content">
+			<nav-block><a href="<c:url value="/index.do" />">首页</a></nav-block>
+			<nav-block><a href="<c:url value="/index.do" />">个人主页</a></nav-block>
+			<nav-block><a href="<c:url value="/index.do" />">消息中心</a></nav-block>
+			</div>
+		</div>
+	</c:if>
 </body>
 <script type="text/javascript">
 function showsetting(){

@@ -1,6 +1,6 @@
 package blog.domain;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * 文章实体类
@@ -32,12 +32,12 @@ public class Artical implements Entity {
 	/**
 	 * 文章创建时间
 	 */
-	private Date createTime;
+	private Timestamp createTime;
 	
 	/**
 	 * 文章类型Id
 	 */
-	private Short typeId;
+	private String typeId;
 	
 	/**
 	 * 文章状态
@@ -76,11 +76,11 @@ public class Artical implements Entity {
 		this.content = content;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -92,11 +92,11 @@ public class Artical implements Entity {
 		this.status = status;
 	}
 
-	public Short getTypeId() {
+	public String getTypeId() {
 		return typeId;
 	}
 
-	public void setTypeId(Short typeId) {
+	public void setTypeId(String typeId) {
 		this.typeId = typeId;
 	}
 

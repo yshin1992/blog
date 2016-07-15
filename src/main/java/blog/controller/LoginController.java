@@ -42,7 +42,7 @@ public class LoginController extends HttpServlet {
 			if(null != user)
 			{
 				req.getSession().setAttribute(SysConstants.CURRENT_USER, user);
-				req.getRequestDispatcher(URLConstants.PAGE_INDEX).forward(req, resp);
+				resp.sendRedirect(req.getContextPath()+URLConstants.INDEX);
 				return ;
 			}
 		}

@@ -1,0 +1,12 @@
+html, body {
+	margin: 0;
+	padding: 0 auto;
+	background: #f0f0f0;
+}
+
+div.main {
+	margin: 0.5em 20%;
+	background: #fff;
+	min-height: 500px;
+	border:1px solid #fefefe;
+}

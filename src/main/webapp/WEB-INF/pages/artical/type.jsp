@@ -93,7 +93,6 @@ function showChildType(typeId)
 	$ajax.send(function(xhr){
 		var childs = xhr.responseText;
 		childs = eval(childs);
-		console.log(childs)
 		for(var i=0;i<childs.length;i++){
 			appendTypeDOM(childs[i].typeName,childs[i].id,childs[i].parentId);
 		}

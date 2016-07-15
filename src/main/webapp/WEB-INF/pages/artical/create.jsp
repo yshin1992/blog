@@ -5,15 +5,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>新建BLOG</title>
+	<link rel="stylesheet" href="<c:url value='/WebResource/css/common.css'/>" />
 	<link rel="stylesheet" href="<c:url value='/WebResource/kindeditor/themes/default/default.css'/>" />
 	<link rel="stylesheet" href="<c:url value='/WebResource/kindeditor/plugins/code/prettify.css'/>" />
 	<script charset="utf-8" src="<c:url value='/WebResource/kindeditor/kindeditor-all.js'/>"></script>
 	<script charset="utf-8" src="<c:url value='/WebResource/kindeditor/lang/zh-CN.js'/>"></script>
 	<script charset="utf-8" src="<c:url value='/WebResource/kindeditor/plugins/code/prettify.js'/>"></script>
 <style>
-	.form-div{
-		margin:10px;
-		width:100%;
+	div.form-div{
+		margin:1em;
 	}
 	.form-div label{
 		display: inline-block;
@@ -26,15 +26,17 @@
 </style>
 </head>
 <body>
-	<div class="form-div">
-		<form name="example" method="post" action="demo.jsp">
-		<label>标题</label><input type="text" name="title"/><br/>
-		<label>分类</label><select id="top-level"></select>&nbsp;<select id="second-level"></select><br/>
-		<label>内容</label><br/>
-		<textarea name="content1" cols="100" rows="8" style="width:700px;height:200px;visibility:hidden;"></textarea>
-		<br />
-		<input type="submit" name="button" value="提交内容" /> (提交快捷键: Ctrl + Enter)
-	</form>
+	<div class="main">
+		<div class="form-div">
+			<form name="blog" method="post" action="<c:url value='/artical/create.do'/>">
+				<label>标题</label><input type="text" name="title" style="width:500px" /><br/>
+				<label>分类</label><select id="top-level"></select>&nbsp;<select id="second-level" name="articalType"></select><br/>
+				<label>内容</label><br/>
+				<textarea name="content1" cols="100" rows="8" style="width:800px;height:500px;visibility:hidden;"></textarea>
+				<br />
+				<input type="submit" name="button" value="提交内容" /> (提交快捷键: Ctrl + Enter)
+			</form>
+		</div>
 	</div>
 	<script type="text/javascript" src="<c:url value='/WebResource/js/ajax.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/WebResource/js/common.js'/>"></script>
@@ -42,18 +44,18 @@
 		KindEditor.ready(function(K) {
 			var editor1 = K.create('textarea[name="content1"]', {
 				cssPath : '<c:url value="/WebResource/kindeditor/plugins/code/prettify.css"/>',
-				uploadJson : '<c:url value="/articalType/fileUpload.do"/>',
-				fileManagerJson : '<c:url value="/articalType/fileManage.do"/>',
+				uploadJson : '<c:url value="/artical/fileUpload.do"/>',
+				fileManagerJson : '<c:url value="/artical/fileManage.do"/>',
 				allowFileManager : true,
 				afterCreate : function() {
 					var self = this;
 					K.ctrl(document, 13, function() {
 						self.sync();
-						document.forms['example'].submit();
+						document.forms['blog'].submit();
 					});
 					K.ctrl(self.edit.doc, 13, function() {
 						self.sync();
-						document.forms['example'].submit();
+						document.forms['blog'].submit();
 					});
 				}
 			});

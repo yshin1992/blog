@@ -44,7 +44,6 @@ public class UserDaoImpl extends DaoAdapter<User> implements UserDao {
 				user.setCreateTime(rs.getDate(3));
 				user.setStatus(rs.getBoolean(4));
 				user.setLoginName(username);
-				logger.debug("查询用户信息成功:"+user);
 			}
 		} catch (SQLException e) {
 			logger.error("查询用户信息失败 !", e);

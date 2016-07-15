@@ -46,8 +46,46 @@ public class StringUtil {
 		}
 	}
 	
+	/**
+	 * 过滤掉字符串中的空格
+	 * @param val
+	 * @return
+	 */
+	public static String trimEmpty(String val)
+	{
+		return val.replaceAll("\\s", "");
+	}
+	
+	/**
+	 * 验证字符串是否为空
+	 * @param val
+	 * @return
+	 */
+	public static boolean isEmpty(String val)
+	{
+		return val==null || "".equals(trimEmpty(val));
+	}
+	
+	/**
+	 * 将html中的字符串转义
+	 * @param str
+	 * @return
+	 */
+	public static String htmlSpecialChars(String str)
+	{
+		str = str.replaceAll("&", "&amp;");
+		str = str.replaceAll("<", "&lt;");
+		str = str.replaceAll(">", "&gt;");
+		str = str.replaceAll("\"", "&quot;");
+		return str;
+	}
+	
 	public static void main(String[] args)
 	{
-		System.out.println(generateMD5String("123456"));
+//		System.out.println(generateMD5String("123456"));
+	/*	String testStr = " 12\r\n 3 3dd dd   ";
+		System.out.println(trimEmpty(testStr));*/
+		 int anum = 104857600;
+	     System.out.println(anum);
 	}
 }

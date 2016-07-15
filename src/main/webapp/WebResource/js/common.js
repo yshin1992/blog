@@ -14,6 +14,15 @@ function hide(dom){
 }
 
 /**
+ * 根据DOMID获取元素
+ * @param domId
+ */
+function GetElement(domId){
+	return document.getElementById(domId);
+}
+
+
+/**
  * 二级联动下拉列表
  * @param firstDOM 第一个下拉列表
  * @param secondDOM 第二个下拉列表
@@ -22,7 +31,7 @@ function hide(dom){
  * @param optionValueField ajax请求到的内容中设置为option value的字段名 如:"city.id"
  * @param optionTextField ajax请求到的内容中设置为option text的字段名 如:"city.name"
  */
-var DoubleSelectUtil=function(firstDOM,secondDOM,firstURL,changeURL,optionValueField,optionTextField){
+var DoubleSelectUtil = function(firstDOM,secondDOM,firstURL,changeURL,optionValueField,optionTextField){
 	this.$ajax = new ajaxUtil();
 	this.init=function(){
 		var $self = this;

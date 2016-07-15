@@ -4,15 +4,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="refresh"  content="5;url=<c:url value='${returnURL }'/>">
+<meta http-equiv="refresh"  content="3;url=<c:url value='${returnURL }'/>">
 <title>操作结果</title>
 <script type="text/javascript" src="<c:url value='/WebResource/js/refresh.js' />"></script>
+<style>
+	html,body{
+		width:100%;
+	}
+	div.tip{
+		margin:5%;
+	}
+</style>
 </head>
 <body onload="onstart();">
+<div class="tip">
 	<c:choose>
 		<c:when test="${result eq 'success' }">操作成功,</c:when>
 		<c:otherwise>操作异常,</c:otherwise>
 	</c:choose>
-	<span id="seconds">5</span>秒后跳转!
+	<span id="seconds">3</span>秒后跳转!
+</div>
 </body>
 </html>

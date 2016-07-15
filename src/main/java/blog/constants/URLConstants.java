@@ -24,6 +24,18 @@ public abstract class URLConstants {
 	
 	public static final String PAGE_ARTICAL_CREATE = PAGE_PREFIX + ARTICAL_PREFIX + "/create.jsp";
 	
+	public static final String ARTICAL_FILE_UPLOAD = ARTICAL_PREFIX + "/fileUpload.do";
+	
+	public static final String ARTICAL_FILE_MANAGE = ARTICAL_PREFIX + "/fileManage.do";
+	
+	public static final String ARTICAL_DETAIL = ARTICAL_PREFIX + "/detail.do";
+	
+	public static final String PAGE_ARTICAL_DETAIL = PAGE_PREFIX + ARTICAL_PREFIX + "/detail.jsp";
+	
+	public static final String ARTICAL_DETAIL_JSON = ARTICAL_PREFIX + "/jsondetail.do";
+	
+	public static final String PAGE_ARTICAL_DETAIL_JSON = PAGE_PREFIX + ARTICAL_PREFIX + "/jsondetail.jsp";
+	
 	/****************** ArticalType相关页面和controller *******************/
 	private static final String ARTICAL_TYPE_PREFIX = "/articalType";
 	
@@ -37,7 +49,4 @@ public abstract class URLConstants {
 	
 	public static final String ARTICAL_GET_CHILDS = ARTICAL_TYPE_PREFIX + "/getChilds.do";
 	
-	public static final String ARTICAL_FILE_UPLOAD = ARTICAL_TYPE_PREFIX + "/fileUpload.do";
-	
-	public static final String ARTICAL_FILE_MANAGE = ARTICAL_TYPE_PREFIX + "/fileManage.do";
 }

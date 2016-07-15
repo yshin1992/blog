@@ -24,6 +24,10 @@ public class ArticalTypeDaoImpl extends DaoAdapter<ArticalType> implements Artic
 	private static final String ARTICAL_TYPE_QUERY_BY_ID = "select id,typeName,parentId from artical_type where id=?";
 	
 	private static final String ARTICAL_TYPE_DELETE = "delete from artical_type where id=?";
+	
+	/**
+	 * 创建文章类型
+	 */
 	@Override
 	public int create(ArticalType t) {
 		Connection con = null;
@@ -96,6 +100,9 @@ public class ArticalTypeDaoImpl extends DaoAdapter<ArticalType> implements Artic
 		return 0;
 	}
 
+	/**
+	 * 删除文章类型
+	 */
 	public int delete(String id){
 		int executeRows = 0;
 		if(null == id){
@@ -158,6 +165,11 @@ public class ArticalTypeDaoImpl extends DaoAdapter<ArticalType> implements Artic
 		return typeList;
 	}
 
+	/**
+	 * 根据文章类型ID查询文章类型信息
+	 * @param pk
+	 * @return
+	 */
 	public ArticalType queryByPk(String pk) {
 		// TODO Auto-generated method stub
 		if(null == pk)

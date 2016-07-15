@@ -1,5 +1,5 @@
 var countDown = (function() {
-	var counter = 5;
+	var counter = 3;
 	return function() {
 		return --counter;
 	}

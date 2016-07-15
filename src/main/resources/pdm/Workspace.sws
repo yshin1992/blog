@@ -4,7 +4,8 @@
 
 <Workspace>
 	<Local Expanded="Yes">
-		<Model Expanded="Yes" ID="{EF64B80A-E452-4EE9-81A6-474BED904EFB}" Name="blob" Selected="Yes" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="blob.oom"/>
+		<Model ID="{EF64B80A-E452-4EE9-81A6-474BED904EFB}" Name="blob" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="blob.oom"/>
+		<Model Expanded="Yes" ID="{0A532323-91D2-47CD-AEDE-5F032E3268C8}" Name="csrr" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="file:///D|/develop/sybaseworkspace/csrr/csrr.prj"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>
